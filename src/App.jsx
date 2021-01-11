@@ -6,19 +6,12 @@ const BatteryContext = createContext(90);
 const OnlineContext = createContext(false);
 
 class Leaf extends Component {
+    static contextType = BatteryContext;
+
     render() {
+        const battery = this.context;
         return (
-            <BatteryContext.Consumer>
-                {
-                    battery => (
-                        <OnlineContext.Consumer>
-                            {
-                                online => <h1>Battery: {battery}, Online: {String(online)}</h1>
-                            }
-                        </OnlineContext.Consumer>
-                    )
-                }
-            </BatteryContext.Consumer>
+            <h1>Battery: {battery}</h1>
         )
     }
 }
