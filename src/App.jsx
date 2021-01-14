@@ -1,31 +1,26 @@
-import React, { lazy, Suspense } from 'react'
+import React, {Component, memo} from 'react'
 
-const AppTitle = lazy(
-    () => import(/* webpackChunkName: "title" */'./title.jsx')
-)
+const Foo = memo(function Foo(props) {
 
-class App extends React.Component {
+    console.log('Foo render');
+    return null;
+
+});
+
+class App extends Component {
+
     state = {
-        isError: false
+        count: 0,
     }
 
-    static getDerivedStateFromError(error) {
-        return { isError: true };
-    }
+    render() {
 
-    componentDidCatch (err, info) {
-        console.log("err>>>", err, info)
-    }
-
-    render () {
-        if (this.state.isError) {
-            return (<div>error</div>)
-        }
         return (
             <div>
-                <Suspense fallback={<div>Loading</div>}>
-                    <AppTitle/>
-                </Suspense>
+                <button onClick={() => this.setState({count: this.state.count + 1})}>
+                    Add
+                </button>
+                <Foo name="Mike" />
             </div>
         )
     }
