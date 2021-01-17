@@ -1,0 +1,16 @@
+{
+  "id": "2332032",
+  "name": "train-ticket",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1471052",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    }
+  ]
+}
