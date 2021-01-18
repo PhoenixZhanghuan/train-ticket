@@ -1,4 +1,4 @@
-import React, {useState, useRef, memo, useCallback, useEffect} from 'react';
+import React, {useState, useRef, memo, useEffect} from 'react';
 import './App.css'
 import {
     createSet,
@@ -6,8 +6,7 @@ import {
     createRemove,
     createToggle
 } from './actions';
-
-let idSeq = Date.now();
+import reducer from './reducers';
 
 function bindActionCreators(actionCreators, dispatch) {
     const ret = {};
@@ -33,11 +32,7 @@ const Control = memo(function Control(props) {
             return;
         }
 
-        addTodo({
-            id: ++idSeq,
-            text: newText,
-            complete: false,
-        });
+        addTodo(newText);
 
         inputRef.current.value = '';
     }
@@ -114,39 +109,40 @@ const Todos = memo(function Todos(props) {
 
 const LS_KEY = '_$-todos_';
 
+let store = {
+    todos: [],
+    incrementCount: 0
+}
+
 function TodoList() {
     const [todos, setTodos] = useState([]);
+    const [incrementCount, setIncrementCount] = useState(0);
 
-    const dispatch = useCallback((action) => {
-        const {type, payload} = action;
+    useEffect(() => {
+        Object.assign(store, {
+            todos,
+            incrementCount,
+        });
+    }, [todos, incrementCount]);
 
-        switch (type) {
-            case 'set':
-                setTodos(payload);
-                break;
-            case 'add':
-                setTodos(todos => [...todos, payload]);
-                break;
-            case 'remove':
-                setTodos(todos => todos.filter(todo => {
-                    return todo.id !== payload;
-                }))
-                break;
-            case 'toggle':
-                setTodos(todos => todos.map(todo => {
-                    return todo.id === payload
-                        ? {
-                            ...todo,
-                            complete: !todo.complete
-                        }
-                        : todo;
-                }))
-                break;
-            default:
-                break;
+    const dispatch = (action) => {
+        const setters = {
+            todos: setTodos,
+            incrementCount: setIncrementCount
+        };
 
+        if('function' === typeof action) {
+            action(dispatch, () => store);
+            return;
         }
-    }, []);
+
+        const newState = reducer(store, action);
+
+        for (let key in newState) {
+            setters[key](newState[key]);
+        }
+
+    };
 
     useEffect(() => {
         const todos = JSON.parse(localStorage.getItem(LS_KEY));
