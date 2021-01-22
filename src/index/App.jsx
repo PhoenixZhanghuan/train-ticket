@@ -11,7 +11,7 @@ import Submit from "./Submit";
 
 import CitySelector from "../common/CitySelector";
 
-import {exchangeFromTo, hideCitySelector, showCitySelector} from './actions';
+import {exchangeFromTo, hideCitySelector, showCitySelector, fetchCityData} from './actions';
 
 function App(props) {
 
@@ -37,7 +37,8 @@ function App(props) {
 
     const citySelectorCbs = useMemo(() => {
         return bindActionCreators({
-            onBack: hideCitySelector
+            onBack: hideCitySelector,
+            fetchCityData
         }, dispatch);
     }, [])
 
