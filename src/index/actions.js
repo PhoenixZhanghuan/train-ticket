@@ -117,7 +117,7 @@ export function fetchCityData() {
             return;
         }
 
-        const cache = JSON.parse(localStorage.getItem("city_data_cache") || {});
+        const cache = JSON.parse(localStorage.getItem("city_data_cache") || '{}');
 
         if(Date.now() < cache.expires) {
             dispatch(setCityData(cache.data))
