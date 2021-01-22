@@ -17,6 +17,7 @@
     transition-property: transform;
     transition-duration: 0.3s;
 }
+
 .journey-switch-reverse {
     transform: rotateZ(180deg);
 }

@@ -16,7 +16,8 @@ import {
     hideCitySelector,
     showCitySelector,
     fetchCityData,
-    setSelectedCity
+    setSelectedCity,
+    showDateSelector
 } from './actions';
 
 function App(props) {
@@ -28,6 +29,7 @@ function App(props) {
         cityData,
         isLoadingCityData,
         dispatch,
+        departDate,
     } = props;
 
     const onBack = useCallback(() => {
@@ -49,6 +51,12 @@ function App(props) {
         }, dispatch);
     }, [])
 
+    const departDateCbs = useMemo(() => {
+        return bindActionCreators({
+            onClick: showDateSelector
+        }, dispatch)
+    }, []);
+
     return (
         <div>
             <div className="header-wrapper">
@@ -60,7 +68,10 @@ function App(props) {
                     to={to}
                     {...cbs}
                 />
-                <DepartDate/>
+                <DepartDate
+                    time={departDate}
+                    {...departDateCbs}
+                />
                 <HighSpeed/>
                 <Submit/>
             </form>
