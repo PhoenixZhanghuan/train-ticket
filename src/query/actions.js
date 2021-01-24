@@ -1,4 +1,4 @@
-import {ORDER_DEPART, ORDER_DURATION} from "./Constant";
+import {ORDER_DEPART, ORDER_DURATION} from "./constant";
 
 import { h0 } from '../common/fp';
 

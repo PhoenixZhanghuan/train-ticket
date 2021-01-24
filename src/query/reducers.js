@@ -21,7 +21,7 @@ import {
     ACTION_SET_IS_FILTERS_VISIBLE,
     ACTION_SET_SEARCH_PARSED,
 } from './actions';
-import {ORDER_DEPART} from "./Constant";
+import {ORDER_DEPART} from "./constant";
 
 export default {
     from(state = null, action) {
@@ -31,6 +31,7 @@ export default {
                 return payload;
             default:
         }
+        return state;
     },
     to(state = null, action) {
         const {type, payload} = action;
