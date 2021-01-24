@@ -1,5 +1,6 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import URI from 'urijs';
 import dayjs from "dayjs";
 
@@ -15,14 +16,25 @@ import {
     setDepartDate,
     setHighSpeed,
     setSearchParsed,
-
     setTrainList,
     setTicketTypes,
     setTrainTypes,
     setDepartStations,
     setArriveStations,
     prevDate,
-    nextDate
+    nextDate,
+    toggleOrderType,
+    toggleHighSpeed,
+    toggleOnlyTickets,
+    toggleIsFiltersVisible,
+    setCheckedTicketTypes,
+    setCheckedTrainTypes,
+    setCheckedDepartStations,
+    setCheckedArriveStations,
+    setDepartTimeStart,
+    setDepartTimeEnd,
+    setArriveTimeStart,
+    setArriveTimeEnd
 } from './actions';
 import './App.css';
 import useNav from "../common/useNav";
@@ -38,6 +50,11 @@ function App(props) {
         dispatch,
         orderType,
         onlyTickets,
+        isFiltersVisible,
+        ticketTypes,
+        trainTypes,
+        departStations,
+        arriveStations,
         checkedTicketTypes,
         checkedTrainTypes,
         checkedDepartStations,
@@ -136,9 +153,26 @@ function App(props) {
         isNextDisabled,
         prev,
         next,
-    } = useNav(departDate, dispatch, prevDate, nextDate)
+    } = useNav(departDate, dispatch, prevDate, nextDate);
 
-    if(!searchParsed) {
+    const bottomCbs = useMemo(() => {
+        return bindActionCreators({
+            toggleOrderType,
+            toggleHighSpeed,
+            toggleOnlyTickets,
+            toggleIsFiltersVisible,
+            setCheckedTicketTypes,
+            setCheckedTrainTypes,
+            setCheckedDepartStations,
+            setCheckedArriveStations,
+            setDepartTimeStart,
+            setDepartTimeEnd,
+            setArriveTimeStart,
+            setArriveTimeEnd
+        }, dispatch);
+    }, [])
+
+    if (!searchParsed) {
         return null;
     }
 
@@ -157,7 +191,25 @@ function App(props) {
             <List
                 list={trainList}
             />
-            <Bottom/>
+            <Bottom
+                highSpeed={highSpeed}
+                orderType={orderType}
+                onlyTickets={onlyTickets}
+                isFiltersVisible={isFiltersVisible}
+                ticketTypes={ticketTypes}
+                trainTypes={trainTypes}
+                departStations={departStations}
+                arriveStations={arriveStations}
+                checkedTicketTypes={checkedTicketTypes}
+                checkedTrainTypes={checkedTrainTypes}
+                checkedDepartStations={checkedDepartStations}
+                checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
+                departTimeEnd={departTimeEnd}
+                arriveTimeStart={arriveTimeStart}
+                arriveTimeEnd={arriveTimeEnd}
+                {...bottomCbs}
+            />
         </div>
     )
 }
