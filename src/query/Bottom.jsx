@@ -155,6 +155,21 @@ const BottomModal = memo(function (props) {
         }
     ]
 
+    function sure() {
+        setCheckedTicketTypes(localCheckedTicketTypes);
+        setCheckedTrainTypes(localCheckedTrainTypes);
+        setCheckedDepartStations(localCheckedDepartStations);
+        setCheckedArriveStations(localCheckedArriveStations);
+
+        setDepartTimeStart(localDepartTimeStart);
+        setDepartTimeEnd(localDepartTimeEnd);
+
+        setArriveTimeStart(localArriveTimeStart);
+        setArriveTimeEnd(localArriveTimeEnd);
+
+        toggleIsFiltersVisible();
+    }
+
     return (
         <div className="bottom-modal">
             <div className="bottom-dialog">
@@ -163,7 +178,7 @@ const BottomModal = memo(function (props) {
                         <span className="reset">
                             重置
                         </span>
-                        <span className="ok">
+                        <span className="ok" onClick={sure}>
                             确定
                         </span>
                     </div>
@@ -248,6 +263,9 @@ export default function Bottom(props) {
         setArriveTimeStart,
         setArriveTimeEnd
     } = props;
+
+    // console.log('isFiltersVisible', isFiltersVisible);
+
     return (
         <div className="bottom">
             <div className="bottom-filters">

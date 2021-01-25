@@ -101,49 +101,49 @@ const Slider = memo(function Slider(props) {
     }, [winSize.width]);
 
     useEffect(() => {
-        startHandle.current.addEventListener(
+        startHandle.current?.addEventListener(
             'touchstart',
             onStartTouchBegin,
             false
         );
-        startHandle.current.addEventListener(
+        startHandle.current?.addEventListener(
             'touchmove',
             onStartTouchMove,
             false
         );
-        endHandle.current.addEventListener(
+        endHandle.current?.addEventListener(
             'touchstart',
             onEndTouchBegin,
             false
         );
-        endHandle.current.addEventListener(
+        endHandle.current?.addEventListener(
             'touchmove',
             onEndTouchMove,
             false
         );
 
         return () => {
-            startHandle.current.removeEventListener(
+            startHandle.current?.removeEventListener(
                 'touchstart',
                 onStartTouchBegin,
                 false
             );
-            startHandle.current.removeEventListener(
+            startHandle.current?.removeEventListener(
                 'touchmove',
                 onStartTouchMove,
                 false
             );
-            endHandle.current.removeEventListener(
+            endHandle.current?.removeEventListener(
                 'touchstart',
                 onEndTouchBegin,
                 false
             );
-            endHandle.current.removeEventListener(
+            endHandle.current?.removeEventListener(
                 'touchmove',
                 onEndTouchMove,
                 false
             );
-        }
+        };
     });
 
     useEffect(() => {

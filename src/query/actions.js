@@ -181,11 +181,11 @@ export function setArriveTimeEnd(arriveTimeEnd) {
 
 export function toggleIsFiltersVisible() {
     return (dispatch, getState) => {
-        const { IsFiltersVisible } = getState();
-
+        const { isFiltersVisible } = getState();
+        // console.log('toggleIsFiltersVisible', getState());
         dispatch({
             type: ACTION_SET_IS_FILTERS_VISIBLE,
-            payload: !IsFiltersVisible
+            payload: !isFiltersVisible
         })
     }
 }
