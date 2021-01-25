@@ -2,6 +2,7 @@ import React, {memo, useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import Slider from './Slider.jsx';
 import './Bottom.css';
 import {ORDER_DEPART} from "./constant";
 
@@ -122,6 +123,11 @@ const BottomModal = memo(function (props) {
         }
     });
 
+    const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart);
+    const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd);
+    const [localArriveTimeStart, setLocalArriveTimeStart] = useState(arriveTimeStart);
+    const [localArriveTimeEnd, setLocalArriveTimeEnd] = useState(arriveTimeEnd);
+
     const optionGroup = [
         {
             title: '坐席类型',
@@ -133,21 +139,22 @@ const BottomModal = memo(function (props) {
             title: '车次类型',
             options: trainTypes,
             checkedMap: localCheckedTrainTypes,
-            update: localCheckedTrainTypes
+            update: setLocalCheckedTrainTypes
         },
         {
             title: '出发车站',
             options: departStations,
             checkedMap: localCheckedDepartStations,
-            update: localCheckedDepartStations
+            update: setLocalCheckedDepartStations
         },
         {
             title: '到达车站',
             options: arriveStations,
             checkedMap: localCheckedArriveStations,
-            update: localCheckedArriveStations
+            update: setLocalCheckedArriveStations
         }
     ]
+
     return (
         <div className="bottom-modal">
             <div className="bottom-dialog">
@@ -164,6 +171,21 @@ const BottomModal = memo(function (props) {
                         {
                             optionGroup.map(group => <Option key={group.title} {...group} />)
                         }
+
+                        <Slider
+                            title="出发时间"
+                            currentStartHours={localDepartTimeStart}
+                            currentEndHours={localDepartTimeEnd}
+                            onStartChanged={setLocalDepartTimeStart}
+                            onEndChanged={setLocalDepartTimeEnd}
+                        />
+                        <Slider
+                            title="到达时间"
+                            currentStartHours={localArriveTimeStart}
+                            currentEndHours={localArriveTimeEnd}
+                            onStartChanged={setLocalArriveTimeStart}
+                            onEndChanged={setLocalArriveTimeEnd}
+                        />
                     </div>
                 </div>
             </div>
