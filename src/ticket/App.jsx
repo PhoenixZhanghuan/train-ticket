@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import './App.css';
 import {h0} from '../common/fp';
 import useNav from "../common/useNav";
+import {TrainContext} from "./Context";
 import {
     nextDate,
     prevDate,
@@ -26,6 +27,7 @@ import {
 import Header from '../common/Header';
 import Nav from '../common/Nav';
 import Detail from '../common/Detail';
+import Candidate from "./Candidate";
 
 const Schedule = lazy(
     () => import('./Schedule.jsx'
@@ -142,6 +144,14 @@ function App(props) {
                     {...detailCbs}
                 />
             </div>
+            <TrainContext.Provider value={{
+                trainNumber,
+                departStation,
+                arriveStation,
+                departDate
+            }}>
+                <Candidate tickets={tickets}/>
+            </TrainContext.Provider>
             {isScheduleVisible &&
             <div className="mask" onClick={() => dispatch(toggleIsScheduleVisible())}>
                 <Suspense fallback={<div>loading</div>}>
@@ -154,7 +164,6 @@ function App(props) {
                 </Suspense>
             </div>
             }
-
         </div>
     )
 }
