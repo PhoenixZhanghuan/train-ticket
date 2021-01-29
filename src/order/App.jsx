@@ -9,23 +9,24 @@ import Ticket from "./Ticket";
 import Header from "../common/Header";
 import Detail from "../common/Detail";
 import Menu from "./Menu";
+import Choose from "./Choose";
 
 import {
     createAdult,
     createChild,
     fetchInitial,
+    hideMenu,
+    removePassenger,
     setArriveStation,
     setDepartDate,
     setDepartStation,
     setSearchParsed,
     setSeatType,
     setTrainNumber,
-    removePassenger,
-    updatePassenger,
-    hideMenu,
-    showGenderMenu,
     showFollowAdultMenu,
-    showTicketTypeMenu
+    showGenderMenu,
+    showTicketTypeMenu,
+    updatePassenger
 } from './actions';
 
 function App(props) {
@@ -106,6 +107,12 @@ function App(props) {
         }, dispatch)
     }, []);
 
+    const chooseCbs = useMemo(() => {
+        return bindActionCreators({
+            updatePassenger
+        }, dispatch)
+    }, [])
+
     if (!searchParsed) {
         return null;
     }
@@ -136,6 +143,15 @@ function App(props) {
                     ...passengersCbs
                 }
             />
+            {
+                passengers.length > 0 && (
+                    <Choose
+                        passengers={passengers}
+                        {
+                            ...chooseCbs
+                        }
+                    />
+                )}
             <Menu
                 show={isMenuVisible}
                 {
