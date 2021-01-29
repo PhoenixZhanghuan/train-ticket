@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import dayjs from "dayjs";
 import 'dayjs/locale/zh-cn'
 import './Detail.css';
-import {toggleIsScheduleVisible} from "../ticket/actions";
 
 function format(d) {
     const date = dayjs(d);
@@ -21,7 +20,6 @@ const Detail = memo(function Detail(props) {
         departStation,
         arriveStation,
         durationStr,
-        toggleIsScheduleVisible
     } = props;
 
     const departDateStr = useMemo(() =>format(departDate), [departDate]);
@@ -38,9 +36,7 @@ const Detail = memo(function Detail(props) {
                 <div className="middle">
                     <p className="train-name">{trainNumber}</p>
                     <p className="train-mid">
-                        <span className="left"/>
-                        <span className="schedule" onClick={() => toggleIsScheduleVisible()}>时刻表</span>
-                        <span className="right"/>
+                        {props.children}
                     </p>
                     <p className="train-time">耗时{durationStr}</p>
                 </div>

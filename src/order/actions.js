@@ -68,3 +68,25 @@ export function setIsMenuVisible(isMenuVisible) {
 export function setSearchParsed(searchParsed) {
     return {type: ACTION_SET_SEARCH_PARSED, payload: searchParsed}
 }
+
+export function fetchInitial(url) {
+    return (dispatch, getState) => {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                const {
+                    departTimeStr,
+                    arriveTimeStr,
+                    arriveDate,
+                    durationStr,
+                    price
+                } = data;
+
+                dispatch(setDepartTimeStr(departTimeStr));
+                dispatch(setArriveTimeStr(arriveTimeStr));
+                dispatch(setArriveDate(arriveDate));
+                dispatch(setDurationStr(durationStr));
+                dispatch(setPrice(price));
+            })
+    }
+}
