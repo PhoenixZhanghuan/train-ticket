@@ -10,6 +10,7 @@ import Header from "../common/Header";
 import Detail from "../common/Detail";
 import Menu from "./Menu";
 import Choose from "./Choose";
+import Account from "./Account";
 
 import {
     createAdult,
@@ -151,7 +152,12 @@ function App(props) {
                             ...chooseCbs
                         }
                     />
-                )}
+                )
+            }
+            <Account
+                length={passengers.length}
+                price={price}
+            />
             <Menu
                 show={isMenuVisible}
                 {
